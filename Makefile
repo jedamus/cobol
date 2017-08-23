@@ -1,5 +1,5 @@
 # erzeugt Samstag, 04. Juli 2015 14:04 (C) 2015 von Leander Jedamus
-# modifiziert Mittwoch, 23. August 2017 17:14 von Leander Jedamus
+# modifiziert Mittwoch, 23. August 2017 17:16 von Leander Jedamus
 # modifiziert Mittwoch, 24. Februar 2016 13:05 von Leander Jedamus
 # modifiziert Dienstag, 16. Februar 2016 09:17 von Leander Jedamus
 # modifiziert Montag, 08. Februar 2016 15:26 von Leander Jedamus
@@ -74,7 +74,6 @@ FILES		+= $(COBFILES1) $(COBFILES2) $(COBFILES3)
 MAINCOBFILE4	= haupt.cob
 MAINCOBOBJ4	= $(MAINCOBFILE4:%.cob=%.o)
 COBFILES4	= unter.cob
-
 COBOBJ4		= $(COBFILES4:%.cob=%.o)
 CLEAN		+= $(MAINCOBOBJ4) $(COBOBJ4) programm
 FILES		+= $(MAINCOBFILE4) $(COBFILES4)
