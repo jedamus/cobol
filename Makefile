@@ -1,5 +1,5 @@
 # erzeugt Samstag, 04. Juli 2015 14:04 (C) 2015 von Leander Jedamus
-# modifiziert Mittwoch, 23. August 2017 16:39 von Leander Jedamus
+# modifiziert Mittwoch, 23. August 2017 17:14 von Leander Jedamus
 # modifiziert Mittwoch, 24. Februar 2016 13:05 von Leander Jedamus
 # modifiziert Dienstag, 16. Februar 2016 09:17 von Leander Jedamus
 # modifiziert Montag, 08. Februar 2016 15:26 von Leander Jedamus
@@ -67,10 +67,18 @@ FILES		= Makefile
 COBFILES1	= beisp13.cob
 COBFILES2	= kopier.cob
 COBFILES3	= mystdinout.cob
-COBFILES4	= haupt.cob unter.cob
-PROGRAMS        = program beisp13 kopier mystdinout
-CLEAN		= program beisp13 kopier mystdinout
-FILES		+= $(COBFILES1) $(COBFILES2) $(COBFILES3) $(COBFILES4)
+PROGRAMS        += beisp13 kopier mystdinout
+CLEAN		+= beisp13 kopier mystdinout
+FILES		+= $(COBFILES1) $(COBFILES2) $(COBFILES3)
+
+MAINCOBFILE4	= haupt.cob
+MAINCOBOBJ4	= $(MAINCOBFILE4:%.cob=%.o)
+COBFILES4	= unter.cob
+
+COBOBJ4		= $(COBFILES4:%.cob=%.o)
+CLEAN		+= $(MAINCOBOBJ4) $(COBOBJ4) programm
+FILES		+= $(MAINCOBFILE4) $(COBFILES4)
+PROGRAMS	+= programm
 
 .PHONY:		all
 all::		$(PROGRAMS)
@@ -85,8 +93,8 @@ kopier:		$(COBFILES2)
 mystdinout:	$(COBFILES3)
 		$(COMPILE.cob) -x $(COBFILES3) -o $@
 
-program:	$(COBFILES4)
-		$(COMPILE.cob) -x $(COBFILES4) -o $@
+programm:	$(MAINCOBOBJ4) $(COBOBJ4)
+		$(COMPILE.cob) -x $(MAINCOBOBJ4) $(COBOBJ4) -o $@
 
 .PHONY:		clean
 clean:
@@ -101,6 +109,9 @@ print:		$(FILES)
 
 .PHONY:		dummy
 dummy:
+
+$(MAINCOBOBJ4):	    $(MAINCOBFILE4)
+		    $(COMPILE.cob) -x -c $(MAINCOBFILE4)
 
 #
 # include a dependency file if one exists
