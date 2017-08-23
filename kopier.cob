@@ -1,0 +1,61 @@
+      * erzeugt Mittwoch, 23. August 2017 13:17
+      * (C) 2017 von Leander Jedamus
+      * modifiziert Mittwoch, 23. August 2017 13:30 von Leander Jedamus
+
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. kopier.
+       AUTHOR. Leander Jedamus.
+       DATE-WRITTEN. Mittwoch, 23. August 2017 13:17.
+       
+       ENVIRONMENT DIVISION.
+       CONFIGURATION SECTION.
+       
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+           SELECT TEXTEINGABE-DATEI ASSIGN TO "in"
+             ORGANIZATION IS LINE SEQUENTIAL.
+           SELECT ZEILENAUSGABE-DATEI ASSIGN TO "out"
+             ORGANIZATION IS LINE SEQUENTIAL.
+       
+       DATA DIVISION.
+       FILE SECTION.
+       FD TEXTEINGABE-DATEI
+          LABEL RECORDS ARE OMITTED.
+       01 TEXTEINGABE-SATZ          PICTURE X(80).
+       FD ZEILENAUSGABE-DATEI
+          LABEL RECORDS ARE OMITTED.
+       01 ZEILENAUSGABE-SATZ        PICTURE X(80).
+       
+       WORKING-STORAGE SECTION.
+       01 DATEIENDE-KENNZEICHEN        PICTURE XXXX.
+       
+       LOCAL-STORAGE SECTION.
+       
+       LINKAGE SECTION.
+       
+       SCREEN SECTION.
+       
+      *
+       PROCEDURE DIVISION.
+       A000-HAUPTSTEUERUNGS-ROUTINE.
+         OPEN INPUT TEXTEINGABE-DATEI
+              OUTPUT ZEILENAUSGABE-DATEI.
+
+         MOVE "NEIN" TO DATEIENDE-KENNZEICHEN.
+         READ TEXTEINGABE-DATEI
+           AT END     MOVE "JA" TO DATEIENDE-KENNZEICHEN.
+         PERFORM B010-VERARB-SCHREIB-LES
+           UNTIL DATEIENDE-KENNZEICHEN = "JA".
+         CLOSE TEXTEINGABE-DATEI
+               ZEILENAUSGABE-DATEI.
+         STOP RUN.
+
+       B010-VERARB-SCHREIB-LES.
+         MOVE TEXTEINGABE-SATZ TO ZEILENAUSGABE-SATZ.
+         WRITE ZEILENAUSGABE-SATZ.
+         READ TEXTEINGABE-DATEI
+           AT END     MOVE "JA" TO DATEIENDE-KENNZEICHEN.
+       END PROGRAM kopier.
+       
+      * vim:ai sw=4 sts=4 expandtab
+
