@@ -1,0 +1,7 @@
+# cobol
+
+## install
+
+```
+make
+```
