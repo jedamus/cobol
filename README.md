@@ -1,1 +1,7 @@
-# Cobol test environment
+# cobol
+
+## install
+
+```
+make
+```
